@@ -6,6 +6,7 @@
 - pysimplegui
 - Beautifulsoup
 - lxml
+- numpy
 
 ## 当前可用功能
 #### 1、根据坐标点击
