@@ -183,10 +183,7 @@ class adbRun():
             except Exception as e:
                 print('智能等待失败', end='\n\n')
             finally:  # 定义一个最后必定执行的finally，在等待操作过后，查找路径中所有的xml文件，将所有文件删除
-                allXmlNames = Path(__file__).resolve().parent.glob('*.xml')
-                if allXmlNames:
-                    for xmlFile in allXmlNames:
-                        Path.unlink(xmlFile)
+                delFiles('waitXml')
         elif type_ == '滑动查找':
             try:
                 if any((valueX, valueY, InputValue)):
@@ -495,6 +492,7 @@ def checkXml(type_, file):
         warningMsgTuple = warningMsgTuple + msg
         return 'null'
     finally:
+        delFiles(file)
         if warningMsgTuple:
             sg.popup_scrolled(warningMsgTuple, title='查询错误记录', background_color='#ffffff',
                               button_color=('#ffffff', '#18A058'),
@@ -807,10 +805,6 @@ while True:
                 print('取消查找', end='\n\n')
             subprocess.call(f'adb shell rm /sdcard/elementMobile.xml', stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT, shell=True)
-            allXmlNames = Path(__file__).resolve().parent.glob('*.xml')  # 获取路径下所有带.xml的文件
-            if allXmlNames:
-                for xmlFile in allXmlNames:  # 查询xml文件并删除
-                    Path.unlink(xmlFile)
         else:
             sg.popup('设备未正常连接，请先连接设备再进行坐标获取', title='查找坐标', background_color='#ffffff',
                      button_color=('#ffffff', '#18A058'),
